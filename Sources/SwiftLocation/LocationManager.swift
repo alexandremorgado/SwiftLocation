@@ -745,6 +745,8 @@ extension LocationManager: CLLocationManagerDelegate {
         }
     }
     
+    #if !targetEnvironment(macCatalyst)
+    
     public func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         let hasRequestsForRegion = queueBeaconsRequests.filter ({ $0.id == region.identifier }).count > 0
         if hasRequestsForRegion, let region = region as? CLBeaconRegion {
@@ -757,4 +759,7 @@ extension LocationManager: CLLocationManagerDelegate {
             request.complete(beacons: beacons)
         }
     }
+    
+    #endif
+
 }
